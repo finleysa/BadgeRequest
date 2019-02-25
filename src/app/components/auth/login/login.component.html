@@ -1,0 +1,23 @@
+<a id="logo" href="http://www.riti.us">
+  <img src="assets/images/riti.png">
+</a>
+<section>
+  <form fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <h1>NNSS Badge Request Admin Login</h1>
+
+    <mat-form-field>
+      <input type="text" matInput placeholder="Username" username required ngModel name="username" #usernameInput="ngModel">
+      <mat-error *ngIf="usernameInput.hasError('required')">Field must not be empty.</mat-error>
+      <mat-error *ngIf="!usernameInput.hasError('required')">E-Mail is invalid.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="password" matInput placeholder="Password" ngModel name="password" #pwInput="ngModel" required
+        minlength="5">
+      <mat-hint align="end">{{ pwInput.value?.length }} / 5</mat-hint>
+      <mat-error>Has to be at least 5 characters long.</mat-error>
+    </mat-form-field>
+
+    <button type="submit" mat-raised-button color="primary" [disabled]="f.invalid">Submit</button>
+  </form>
+</section>

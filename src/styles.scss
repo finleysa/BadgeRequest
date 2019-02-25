@@ -1,0 +1,25 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+
+body {
+  margin: 0;
+}
+
+.half-page {
+  width: 50%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+#logo {
+  position: relative;
+  left: 8em;
+}
+
+@media only screen and (max-width: 600px) {
+  #logo {
+    left: 1.5em;
+  }
+}

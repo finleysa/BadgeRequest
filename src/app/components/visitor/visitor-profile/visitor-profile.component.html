@@ -1,0 +1,46 @@
+<app-toolbar>
+</app-toolbar>
+<section id="profile">
+  <h1 *ngIf="!selectedVisitor">None Selected</h1>
+
+  <mat-card class="mat-elevation-z6" *ngIf="selectedVisitor">
+    <h1 id="full-name">{{selectedVisitor?.firstName}} {{selectedVisitor?.middleName}} {{selectedVisitor?.lastName}}
+    </h1>
+    <img src="{{selectedVisitor.driversLicenseImage}}" style="margin-right: 1rem;">
+    <img src="{{selectedVisitor.citizenshipImage}}">
+    <table>
+      <tr>
+        <td>First Name:</td>
+        <td>{{selectedVisitor.firstName}}</td>
+      </tr>
+      <mat-divider [inset]="true"></mat-divider>
+      <tr>
+        <td>Middle Name:</td>
+        <td>{{selectedVisitor.middleName || "NMN"}}</td>
+      </tr>
+      <mat-divider [inset]="true"></mat-divider>
+      <tr>
+        <td>Last Name:</td>
+          <td>{{selectedVisitor.lastName}}</td>
+      </tr>
+      <mat-divider [inset]="true"></mat-divider>
+      <tr>
+        <td>Date of Birth:</td>
+        <td>{{selectedVisitor.dob}}</td>
+      </tr>
+      <mat-divider [inset]="true"></mat-divider>
+      <tr>
+        <td>Organization:</td>
+        <td>{{selectedVisitor.organization}}</td>
+      </tr>
+      <mat-divider [inset]="true"></mat-divider>
+      <tr *ngIf="displaySsn">
+        <td>SSN: </td>
+        <td>{{selectedVisitor.ssn}}</td>
+      </tr>
+    </table>
+    <button mat-stroked-button (click)="showSsn()" style="margin-top: 1rem;">SSN</button>
+    <button mat-stroked-button color="primary" [routerLink]="['/', 'edit', selectedVisitor._id]">EDIT</button>
+    <button mat-stroked-button color="warn" (click)="onDelete(selectedVisitor._id)">DELETE</button>
+  </mat-card>
+</section>
