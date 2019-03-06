@@ -22,12 +22,14 @@ export class AuthService {
       .post<User>("http://localhost:3000/users/api/login", authData)
       .subscribe(
         responseData => {
-          this.user.username = responseData.username;
-          this.user._id = responseData._id;
-          this.user.hash = responseData.hash;
+          localStorage.setItem("user", responseData.toString());
         },
         err => {
-          if (!err) { this.authChange.next(true); } else { this.logout(); }
+          if (!err) {
+            this.authChange.next(true);
+          } else {
+            this.logout();
+          }
         },
         () => {
           if (this.user._id) {
