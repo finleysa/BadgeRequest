@@ -9,9 +9,9 @@ import { Router } from "@angular/router";
 export class AuthService {
   authChange = new Subject<boolean>();
   private _token: string;
-  
-  get token(): string {
-    return this._token
+
+  getToken() {
+    return this._token;
   }
 
 
@@ -25,7 +25,7 @@ export class AuthService {
         responseData => {
             console.log(responseData);
             this._token = responseData.token;
-        },    
+        },
         err => {
           if (!err) {
             this.authChange.next(true);

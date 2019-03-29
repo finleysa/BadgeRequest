@@ -17,6 +17,8 @@ import { ToolbarComponent } from "./components/toolbar/toolbar.component";
 import { VistorListComponent } from "./components/visitor/vistor-list/vistor-list.component";
 import { VisitorPageComponent } from "./components/visitor/visitor-request/visitor-request.component";
 import { VisitorProfileComponent } from "./components/visitor/visitor-profile/visitor-profile.component";
+import { HTTP_INTERCEPTORS } from "@angular/common/http";
+import { AuthInterceptor } from "./components/auth/auth-interceptor";
 
 @NgModule({
   declarations: [
@@ -39,7 +41,12 @@ import { VisitorProfileComponent } from "./components/visitor/visitor-profile/vi
     FlexLayoutModule,
     HttpClientModule
   ],
-  providers: [AuthService],
+  providers: [AuthService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
