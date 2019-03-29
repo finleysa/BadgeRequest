@@ -8,22 +8,24 @@ import { Router } from "@angular/router";
 @Injectable()
 export class AuthService {
   authChange = new Subject<boolean>();
-  user: User;
+  private _token: string;
+  
+  get token(): string {
+    return this._token
+  }
+
 
   constructor(private http: HttpClient, private router: Router) {}
 
   login(authData: AuthData) {
-    this.user = {
-      username: null,
-      _id: null,
-      hash: null
-    };
+
     this.http
-      .post<User>("http://localhost:3000/users/api/login", authData)
+      .post<{message: string, token: string}>("http://localhost:3000/users/api/login", authData)
       .subscribe(
         responseData => {
-          localStorage.setItem("user", responseData.toString());
-        },
+            console.log(responseData);
+            this._token = responseData.token;
+        },    
         err => {
           if (!err) {
             this.authChange.next(true);
@@ -32,7 +34,7 @@ export class AuthService {
           }
         },
         () => {
-          if (this.user._id) {
+          if (this._token) {
             this.router.navigate(["/home"]);
           }
         }
@@ -40,17 +42,11 @@ export class AuthService {
   }
 
   logout() {
-    this.user = null;
-    localStorage.clear();
-
+    this._token = null;
     this.authChange.next(false);
   }
 
-  getUser() {
-    return { ...this.user };
-  }
-
   isAuth() {
-    return this.user != null;
+    return this._token != null;
   }
 }
